@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,5 +38,15 @@ public class EmployeeController {
     public @ResponseBody ResponseEntity<List<Employee>> findAllEmployeesJDBC(){
         ResponseEntity<List<Employee>> employees = service.findAllEmployeesWithJdbcTemplate();
         return employees;
+    }
+
+    @RequestMapping(path = "/update/employees", method = RequestMethod.PUT)
+    public void updateEmployeesJDBC(@RequestBody Employee employee, @RequestParam("id") int id){
+         service.updateEmployee(employee, id);
+    }
+
+    @RequestMapping(path = "/emp", method = RequestMethod.GET)
+    public void getEmployeesJDBC(@RequestParam("id") int id){
+        service.getEmployeeByIdWithJdbcTemplate( id);
     }
 }
